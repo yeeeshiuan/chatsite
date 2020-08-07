@@ -8,3 +8,8 @@ def room(request, room_name):
     return render(request, 'chat/room.html', {
         'room_name': room_name
     })
+
+def animate(request, room_name):
+    return render(request, 'chat/animate.html', {
+        'room_name': room_name
+    })
