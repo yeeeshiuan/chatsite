@@ -1,4 +1,5 @@
 <!-- chat/templates/chat/room.html -->
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,23 +8,25 @@
 </head>
 <style>
 #container {
-  width: 400px;
-  height: 400px;
+  width: 1280px;
+  height: 720px;
   position: relative;
-  background: yellow;
+  background: #0f4d8f;
 }
 #animate {
-  width: 50px;
-  height: 50px;
+  padding-top: 30px;
+  margin-left: -320px;
+  width: 320px;
+  height: 240px;
   position: absolute;
-  background-color: red;
+  background-color: #0f4d8f;
 }
 </style>
 <body>
     <textarea id="chat-log" cols="10" rows="20"></textarea><br>
     <div id ="container">
-      <div id ="animate">
-        <p id ="message"></p>
+      <div id = "animate">
+        <img src="{% static "chat/Nyancat.gif" %}" alt="Nyancat"/>
       </div>
     </div>
     {{ room_name|json_script:"room-name" }}
@@ -49,16 +52,14 @@
         };
 
         function myMove(message) {
-          document.querySelector('#message').innerHTML = message;
           var elem = document.getElementById("animate");   
           var pos = 0;
           var id = setInterval(frame, 5);
           function frame() {
-            if (pos == 350) {
+           if (pos >= 1280 + 320) {
               clearInterval(id);
             } else {
               pos++; 
-              elem.style.top = pos + "px"; 
               elem.style.left = pos + "px"; 
             }
           }
