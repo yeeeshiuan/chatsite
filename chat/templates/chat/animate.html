@@ -21,11 +21,27 @@
   position: absolute;
   background-color: #0f4d8f;
 }
+#animateFlip {
+  padding-top: 30px;
+  left: 1280px;
+  width: 320px;
+  height: 240px;
+  position: absolute;
+  background-color: #0f4d8f;
+  
+}
+#animateFlip img {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
 </style>
 <body>
     <textarea id="chat-log" cols="10" rows="20"></textarea><br>
     <div id ="container">
       <div id = "animate">
+        <img src="{% static "chat/Nyancat.gif" %}" alt="Nyancat"/>
+      </div>
+      <div id = "animateFlip">
         <img src="{% static "chat/Nyancat.gif" %}" alt="Nyancat"/>
       </div>
     </div>
@@ -52,15 +68,29 @@
         };
 
         function myMove(message) {
-          var elem = document.getElementById("animate");   
-          var pos = 0;
+          var animate = "";
+          var count = 0;
+          var originLeft = 0;
+          if ( message == "animate" ) {
+              animate = "animate";
+              count = 1;
+              originLeft = 0;
+          } else {
+              animate = "animateFlip";
+              count = -1;
+              originLeft = 1280;
+          }
+          var elem = document.getElementById(animate);   
           var id = setInterval(frame, 5);
+          var pos = 0;
+          console.log(elem.style.left);
           function frame() {
            if (pos >= 1280 + 320) {
               clearInterval(id);
             } else {
-              pos++; 
-              elem.style.left = pos + "px"; 
+              pos++;
+              
+              elem.style.left = originLeft + ( count * pos ) + "px"; 
             }
           }
         }
