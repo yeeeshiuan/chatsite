@@ -15,7 +15,7 @@
 }
 #animate {
   padding-top: 30px;
-  margin-left: -320px;
+  margin-left: -360px;
   width: 320px;
   height: 240px;
   position: absolute;
@@ -39,10 +39,10 @@
     <textarea id="chat-log" cols="10" rows="20"></textarea><br>
     <div id ="container">
       <div id = "animate">
-        <img src="{% static "chat/Nyancat.gif" %}" alt="Nyancat"/>
+        <img id = "animateImg" src="" alt="Nyancat"/>
       </div>
       <div id = "animateFlip">
-        <img src="{% static "chat/Nyancat.gif" %}" alt="Nyancat"/>
+        <img id = "animateFlipImg" src="" alt="Nyancat"/>
       </div>
     </div>
     {{ room_name|json_script:"room-name" }}
@@ -69,27 +69,45 @@
 
         function myMove(message) {
           var animate = "";
+          var animateImg = "";
           var count = 0;
           var originLeft = 0;
-          if ( message == "animate" ) {
+          var fileName = "/static/chat/Nyancat.gif";
+          if ( message == "catl" ) {
               animate = "animate";
+              animateImg = "animateImg";
               count = 1;
               originLeft = 0;
-          } else {
+              fileName = "/static/chat/Nyancat.gif";
+          } else if ( message == "catr"){
               animate = "animateFlip";
+              animateImg = "animateFlipImg";
               count = -1;
               originLeft = 1280;
+              fileName = "/static/chat/Nyancat.gif";
+          } else if ( message == "dogl"){
+              animate = "animate";
+              animateImg = "animateImg";
+              count = 1;
+              originLeft = 0;
+              fileName = "/static/chat/Nyandog3.gif";
+          } else {
+              animate = "animateFlip";
+              animateImg = "animateFlipImg";
+              count = 1;
+              count = -1;
+              originLeft = 1280;
+              fileName = "/static/chat/Nyandog3.gif";
           }
           var elem = document.getElementById(animate);   
           var id = setInterval(frame, 5);
           var pos = 0;
-          console.log(elem.style.left);
+          document.getElementById(animateImg).src = fileName;
           function frame() {
-           if (pos >= 1280 + 320) {
+           if (pos >= 1280 + 360) {
               clearInterval(id);
             } else {
               pos++;
-              
               elem.style.left = originLeft + ( count * pos ) + "px"; 
             }
           }
